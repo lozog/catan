@@ -35,12 +35,18 @@ export class Tile extends Actor {
     this.resource = resource;
   }
   public onInitialize() {
-    // Set as the default drawing
-    const triangle = new Polygon({
-      points: [vec(0 * SIDE_LENGTH, 1 * SIDE_LENGTH), vec(0.87 * SIDE_LENGTH, 0.5 * SIDE_LENGTH), vec(0.87 * SIDE_LENGTH, -0.5 * SIDE_LENGTH), vec(0 * SIDE_LENGTH, -1 * SIDE_LENGTH), vec(-0.87 * SIDE_LENGTH, -0.5 * SIDE_LENGTH), vec(-0.87 * SIDE_LENGTH, 0.5 * SIDE_LENGTH),],
+    const hexagon = new Polygon({
+      points: [
+        vec(0, 1).scale(SIDE_LENGTH),
+        vec(0.87, 0.5).scale(SIDE_LENGTH),
+        vec(0.87, -0.5).scale(SIDE_LENGTH),
+        vec(0, -1).scale(SIDE_LENGTH),
+        vec(-0.87, -0.5).scale(SIDE_LENGTH),
+        vec(-0.87, 0.5).scale(SIDE_LENGTH),
+      ],
       color: this.color
     });
-    this.graphics.use(triangle);
+    this.graphics.use(hexagon);
 
     this.on('pointerdown', (evt: Input.PointerEvent) => {
       console.log(`${this.resource} tile at ${this.row}, ${this.col} was clicked`)
