@@ -17,26 +17,18 @@ const game = new Game();
 // game.start(loader);
 game.start()
 
-const xpadding = 10; // px
-const ypadding = 0; // px
-const xoffset = 65; // x-offset
-const yoffset = 65; // y-offset
-const tileWidth = 50;
-
 // this represents the hex board. Each row contains a 1 for a drawn hex or a 0 for a "ghost" hex
 // (used for positioning)
-const rows = [
+const gameBoard = [
   [0,1,1,1,0],
-  [1,1,1,1],
+   [1,1,1,1],
   [1,1,1,1,1],
-  [1,1,1,1],
+   [1,1,1,1],
   [0,1,1,1,0]
 ];
 
-const tileColors = [Color.Violet, Color.Orange, Color.Yellow, Color.Red, Color.Green];
-
 const tiles: Tile[] = [];
-for (const [j, numColumns] of rows.entries()) {
+for (const [j, numColumns] of gameBoard.entries()) {
   for (const [i, shouldDrawTile] of numColumns.entries()) {
     if (shouldDrawTile === 0) {
       continue;
@@ -45,11 +37,7 @@ for (const [j, numColumns] of rows.entries()) {
     // console.log(`row ${j} - ${j % 2}`)
 
     tiles.push(
-      new Tile({
-        x: xoffset + i * (tileWidth + xpadding) + ((j % 2) * (tileWidth + xpadding)/2),
-        y: yoffset + j * (tileWidth + ypadding),
-        color: tileColors[j % tileColors.length]
-      })
+      new Tile(i, j)
     )
   }
 }
@@ -57,13 +45,6 @@ for (const [j, numColumns] of rows.entries()) {
 
 
 tiles.forEach(function (tile) {
-  // Make sure that tiles can participate in collisions
-  tile.body.collisionType = CollisionType.Active;
-
-  tile.on('pointerdown', (evt: Input.PointerEvent) => {
-    console.log('tile was clicked')
-  })
-
   // Add the tile to the current scene to be drawn
   game.add(tile);
 });
