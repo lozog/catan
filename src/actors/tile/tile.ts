@@ -2,27 +2,37 @@ import { Actor, Color, Input, Polygon, vec } from "excalibur";
 
 const SIDE_LENGTH = 30;
 
-const xpadding = 10; // px
-const ypadding = 0; // px
+const xpadding = 30; // px
+const ypadding = 25; // px
 const xoffset = 65; // x-offset
 const yoffset = 65; // y-offset
-const tileWidth = 50;
-const tileColors = [Color.Violet, Color.Orange, Color.Yellow, Color.Red, Color.Green];
+const RESOURCES = ['wood', 'sheep', 'wheat', 'ore', 'brick']
+const RESOURCE_COLORS = {
+  'wood': Color.Green,
+  'sheep': Color.Orange,
+  'wheat': Color.Yellow,
+  'ore': Color.Violet,
+  'brick': Color.Red,
+}
 
 export class Tile extends Actor {
   // grid coordinates
   private row: number;
   private col: number;
 
+  private resource: string;
+
   constructor(i: number, j: number) {
+    const resource = RESOURCES[Math.floor(Math.random() * RESOURCES.length)]
     super({
-      x: xoffset + i * (tileWidth + xpadding) + ((j % 2) * (tileWidth + xpadding)/2),
-      y: yoffset + j * (tileWidth + ypadding),
-      color: tileColors[Math.floor(Math.random() * tileColors.length)]
+      x: xoffset + i * (SIDE_LENGTH + xpadding) + ((j % 2) * (SIDE_LENGTH + xpadding)/2),
+      y: yoffset + j * (SIDE_LENGTH + ypadding),
+      color: RESOURCE_COLORS[resource]
     });
 
     this.row = j;
     this.col = i;
+    this.resource = resource;
   }
   public onInitialize() {
     // Set as the default drawing
@@ -33,7 +43,7 @@ export class Tile extends Actor {
     this.graphics.use(triangle);
 
     this.on('pointerdown', (evt: Input.PointerEvent) => {
-      console.log(`${this.color} tile at ${this.row}, ${this.col} was clicked`)
+      console.log(`${this.resource} tile at ${this.row}, ${this.col} was clicked`)
     })
   }
 }
