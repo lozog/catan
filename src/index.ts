@@ -28,16 +28,16 @@ const gameBoard = [
 ];
 
 const tiles: Tile[] = [];
-for (const [j, numRows] of gameBoard.entries()) {
-  for (const [i, shouldDrawTile] of numRows.entries()) {
+for (const [row, numRows] of gameBoard.entries()) {
+  for (const [col, shouldDrawTile] of numRows.entries()) {
     if (shouldDrawTile === 0) {
       continue;
     }
 
-    // console.log(`row ${j} - ${j % 2}`)
+    // console.log(`row ${row} - ${row % 2}`)
 
     tiles.push(
-      new Tile(i, j)
+      new Tile(row, col)
     )
   }
 }

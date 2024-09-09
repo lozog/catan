@@ -23,16 +23,16 @@ export class Tile extends Actor {
 
   private resource: string;
 
-  constructor(i: number, j: number) {
+  constructor(row: number, col: number) {
     const resource = RESOURCES[Math.floor(Math.random() * RESOURCES.length)]
     super({
-      x: xoffset + i * (HEX_WIDTH + xpadding) + ((j % 2) * (HEX_WIDTH + xpadding)/2),
-      y: yoffset + j * (HEX_WIDTH + ypadding),
+      x: xoffset + col * (HEX_WIDTH + xpadding) + ((row % 2) * (HEX_WIDTH + xpadding)/2),
+      y: yoffset + row * (HEX_WIDTH + ypadding),
       color: RESOURCE_COLORS[resource]
     });
 
-    this.row = j;
-    this.col = i;
+    this.row = row;
+    this.col = col;
     this.resource = resource;
   }
   public onInitialize() {
