@@ -1,11 +1,12 @@
 import { Actor, Color, Input, Polygon, vec } from "excalibur";
 
-const SIDE_LENGTH = 30;
+const SIDE_LENGTH = 60;
+const HEX_WIDTH = 1.73 * SIDE_LENGTH // sqrt(3) * SIDE_LENGTH
 
-const xpadding = 30; // px
-const ypadding = 25; // px
-const xoffset = 65; // x-offset
-const yoffset = 65; // y-offset
+const xpadding = 10; // px
+const ypadding = xpadding - 11; // px
+const xoffset = 80; // x-offset
+const yoffset = 85; // y-offset
 const RESOURCES = ['wood', 'sheep', 'wheat', 'ore', 'brick']
 const RESOURCE_COLORS = {
   'wood': Color.Green,
@@ -25,8 +26,8 @@ export class Tile extends Actor {
   constructor(i: number, j: number) {
     const resource = RESOURCES[Math.floor(Math.random() * RESOURCES.length)]
     super({
-      x: xoffset + i * (SIDE_LENGTH + xpadding) + ((j % 2) * (SIDE_LENGTH + xpadding)/2),
-      y: yoffset + j * (SIDE_LENGTH + ypadding),
+      x: xoffset + i * (HEX_WIDTH + xpadding) + ((j % 2) * (HEX_WIDTH + xpadding)/2),
+      y: yoffset + j * (HEX_WIDTH + ypadding),
       color: RESOURCE_COLORS[resource]
     });
 

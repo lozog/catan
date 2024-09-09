@@ -28,8 +28,8 @@ const gameBoard = [
 ];
 
 const tiles: Tile[] = [];
-for (const [j, numColumns] of gameBoard.entries()) {
-  for (const [i, shouldDrawTile] of numColumns.entries()) {
+for (const [j, numRows] of gameBoard.entries()) {
+  for (const [i, shouldDrawTile] of numRows.entries()) {
     if (shouldDrawTile === 0) {
       continue;
     }
