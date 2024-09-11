@@ -6,8 +6,9 @@ import {
     Color,
     Input,
 } from "excalibur";
-import { Tile } from "./actors/tile/tile";
+import { Tile } from "./actors/tile";
 import { ScenarioBuilder } from "./lib/scenariobuilder";
+import { Corner } from "./actors/corner";
 // import { Resources } from './resources';
 
 /**
@@ -34,7 +35,6 @@ game.start();
 //   [0,1,1,1,0]
 // ];
 
-const tiles: Tile[] = [];
 // for (const [row, numRows] of gameBoard.entries()) {
 //   for (const [col, shouldDrawTile] of numRows.entries()) {
 //     if (shouldDrawTile === 0) {
@@ -52,15 +52,31 @@ const tiles: Tile[] = [];
 const scenarioBuilder = new ScenarioBuilder();
 
 const scenario = scenarioBuilder.getScenario();
-const offset = 300;
+console.log(scenario.board);
+
+
+const OFFSET = 300;
+
+const tiles: Tile[] = [];
 for (const tile of scenario.board.tiles) {
     tiles.push(
-        new Tile(tile.center.x + offset, tile.center.y + offset, tile.type)
+        new Tile(tile.center.x + OFFSET, tile.center.y + OFFSET, tile.type)
     );
 }
-console.log(scenario.board);
+
+const corners: Corner[] = [];
+for (const corner of scenario.board.corners) {
+    corners.push(
+        new Corner(corner.center.x + OFFSET, corner.center.y + OFFSET)
+    );
+}
 
 tiles.forEach(function (tile) {
     // Add the tile to the current scene to be drawn
     game.add(tile);
+});
+
+corners.forEach(function (corner) {
+    // Add the corner to the current scene to be drawn
+    game.add(corner);
 });
