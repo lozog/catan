@@ -1,56 +1,49 @@
-import { Actor, Color, Input, Polygon, vec } from "excalibur";
+import { Actor, Color, Input, Polygon, PolygonCollider, vec } from "excalibur";
 
-const SIDE_LENGTH = 60;
+const SIDE_LENGTH = 23; // TODO: needs to stay in sync with circumradius
 const HEX_WIDTH = 1.73 * SIDE_LENGTH // sqrt(3) * SIDE_LENGTH
-
-const xpadding = 10; // px
-const ypadding = xpadding - 11; // px
-const xoffset = 80; // x-offset
-const yoffset = 85; // y-offset
-const RESOURCES = ['wood', 'sheep', 'wheat', 'ore', 'brick']
 const RESOURCE_COLORS = {
   'wood': Color.Green,
   'sheep': Color.Orange,
   'wheat': Color.Yellow,
   'ore': Color.Violet,
   'brick': Color.Red,
+  'desert': Color.LightGray,
+  'sea': Color.ExcaliburBlue
 }
+const HEX_POINTS = [
+  vec(-1, Math.sqrt(3)).scale(SIDE_LENGTH),
+  vec(1, Math.sqrt(3)).scale(SIDE_LENGTH),
+  vec(2, 0).scale(SIDE_LENGTH),
+  vec(1, -1 * Math.sqrt(3)).scale(SIDE_LENGTH),
+  vec(-1, -1 * Math.sqrt(3)).scale(SIDE_LENGTH),
+  vec(-2, 0).scale(SIDE_LENGTH),
+];
 
 export class Tile extends Actor {
-  // grid coordinates
-  private row: number;
-  private col: number;
-
   private resource: string;
 
-  constructor(row: number, col: number) {
-    const resource = RESOURCES[Math.floor(Math.random() * RESOURCES.length)]
-    super({
-      x: xoffset + col * (HEX_WIDTH + xpadding) + ((row % 2) * (HEX_WIDTH + xpadding)/2),
-      y: yoffset + row * (HEX_WIDTH + ypadding),
-      color: RESOURCE_COLORS[resource]
+  constructor(x: number, y: number, resource: string) {
+    // need to set a collider with the same shape as the graphics since useGraphicsBounds doesn't seem to work
+    const hexagonCollider = new PolygonCollider({
+      points: HEX_POINTS
     });
-
-    this.row = row;
-    this.col = col;
-    this.resource = resource;
+    super({
+      x, y, color: RESOURCE_COLORS[resource], collider: hexagonCollider
+    });
+    this.resource = resource
+    this.pointer.useGraphicsBounds = false
   }
+
   public onInitialize() {
     const hexagon = new Polygon({
-      points: [
-        vec(0, 1).scale(SIDE_LENGTH),
-        vec(0.87, 0.5).scale(SIDE_LENGTH),
-        vec(0.87, -0.5).scale(SIDE_LENGTH),
-        vec(0, -1).scale(SIDE_LENGTH),
-        vec(-0.87, -0.5).scale(SIDE_LENGTH),
-        vec(-0.87, 0.5).scale(SIDE_LENGTH),
-      ],
+      points: HEX_POINTS,
       color: this.color
     });
     this.graphics.use(hexagon);
 
     this.on('pointerdown', (evt: Input.PointerEvent) => {
-      console.log(`${this.resource} tile at ${this.row}, ${this.col} was clicked`)
+      console.log(`${this.resource} tile at ${this.pos.x}, ${this.pos.y} was clicked`)
     })
   }
 }
