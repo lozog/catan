@@ -1,6 +1,74 @@
 import { MathHelper } from "./mathhelper";
 import * as _ from "lodash";
 
+const DEFAULT_SCENARIO = {
+    name: "Base game",
+    victoryPoints: 10,
+    allowance: {
+        roads: 15,
+        settlements: 5,
+        cities: 4,
+    },
+    layouts: [
+        {
+            players: {
+                min: 3,
+                max: 4,
+            },
+            numberTokens: [
+                5, 2, 6, 3, 8, 10, 9, 12, 11, 4, 8, 10, 9, 4, 5, 6, 3,
+                11,
+            ],
+            terrainTiles: "o,g,l,o,g,w,g,w,l,b,d,b,w,w,l,b,o,l,g",
+            tiles: [
+                "-,s",
+                "-,s,s",
+                "s,t3,s",
+                "s,t4,t2,s",
+                "t5,t14,t1",
+                "s,t15,t13,s",
+                "t6,t19,t12",
+                "s,t16,t18,s",
+                "t7,t17,t11",
+                "s,t8,t10,s",
+                "s,t9,s",
+                "-,s,s",
+                "-,s",
+            ],
+        },
+    ],
+};
+
+const SINGLE_HEX_SCENARIO = {
+    name: "Base game",
+    victoryPoints: 10,
+    allowance: {
+        roads: 15,
+        settlements: 5,
+        cities: 4,
+    },
+    layouts: [
+        {
+            players: {
+                min: 3,
+                max: 4,
+            },
+            numberTokens: [
+                5,
+            ],
+            terrainTiles: "o,g,l,o,g,w,g,w,l",
+            tiles: [
+                "-,s",
+                "-,s,s",
+                "-,t9",
+                "-,s,s",
+                "-,s",
+            ],
+        },
+    ],
+};
+
+
 // adapted from https://github.com/sibartlett/colonizers
 export class ScenarioBuilder {
     private players: number;
@@ -17,43 +85,7 @@ export class ScenarioBuilder {
         };
 
         this.players = 3;
-        this.scenario = {
-            name: "Base game",
-            victoryPoints: 10,
-            allowance: {
-                roads: 15,
-                settlements: 5,
-                cities: 4,
-            },
-            layouts: [
-                {
-                    players: {
-                        min: 3,
-                        max: 4,
-                    },
-                    numberTokens: [
-                        5, 2, 6, 3, 8, 10, 9, 12, 11, 4, 8, 10, 9, 4, 5, 6, 3,
-                        11,
-                    ],
-                    terrainTiles: "o,g,l,o,g,w,g,w,l,b,d,b,w,w,l,b,o,l,g",
-                    tiles: [
-                        "-,s",
-                        "-,s,s",
-                        "s,t3,s",
-                        "s,t4,t2,s",
-                        "t5,t14,t1",
-                        "s,t15,t13,s",
-                        "t6,t19,t12",
-                        "s,t16,t18,s",
-                        "t7,t17,t11",
-                        "s,t8,t10,s",
-                        "s,t9,s",
-                        "-,s,s",
-                        "-,s",
-                    ],
-                },
-            ],
-        };
+        this.scenario = DEFAULT_SCENARIO;
     }
 
     getCircumradius() {
@@ -271,13 +303,13 @@ export class ScenarioBuilder {
                 value = numberTokens[index - desert];
             }
 
-            for (angle = 30; angle <= 330; angle += 60) {
+            for (angle = 0; angle <= 300; angle += 60) {
                 corners.push(
                     MathHelper.getEndpoint(tile.center, angle, circumradius)
                 );
             }
 
-            for (angle = 0; angle <= 300; angle += 60) {
+            for (angle = 30; angle <= 330; angle += 60) {
                 edges.push({
                     center: MathHelper.getEndpoint(tile.center, angle, apothem),
                     ends: [

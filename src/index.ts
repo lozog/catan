@@ -75,7 +75,7 @@ for (const corner of scenario.board.corners) {
 const edges: Edge[] = [];
 for (const edge of scenario.board.edges) {
     edges.push(
-        new Edge(edge.center.x + OFFSET, edge.center.y + OFFSET, edge.ends)
+        new Edge(edge.ends, OFFSET)
     );
 }
 

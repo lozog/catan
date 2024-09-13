@@ -2,6 +2,7 @@ import { Actor, Circle, Color, Input  } from "excalibur";
 
 export class Corner extends Actor {
 
+    // todo: pass offset
     constructor(x: number, y: number) {
         super({
             x,

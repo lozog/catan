@@ -17,8 +17,8 @@ export class MathHelper {
         var radians = (angle * Math.PI) / 180;
         return {
             // dividing by 2 here makes the edges in the right places, but the corners to be wrong
-            x: MathHelper.round((origin.x + distance * Math.sin(radians))/1, 3),
-            y: MathHelper.round((origin.y + distance * Math.cos(radians))/1, 3),
+            x: MathHelper.round(origin.x + distance * Math.cos(radians), 3),
+            y: MathHelper.round(origin.y + distance * Math.sin(radians), 3),
         };
     }
 }

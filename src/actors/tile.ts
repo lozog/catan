@@ -14,6 +14,7 @@ export class Tile extends Actor {
     private resource: string;
     private hexagonPoints: Vector[];
 
+    // todo: pass offset
     constructor(x: number, y: number, circumradius: number, resource: string) {
         const hexagonPoints = [
             vec(-1, Math.sqrt(3)).scale(circumradius/2),
@@ -24,15 +25,16 @@ export class Tile extends Actor {
             vec(-2, 0).scale(circumradius/2),
         ];
         // need to set a collider with the same shape as the graphics since useGraphicsBounds doesn't seem to work
-        const hexagonCollider = new PolygonCollider({
+        const collider = new PolygonCollider({
             points: hexagonPoints,
         });
         super({
             x,
             y,
             color: RESOURCE_COLORS[resource],
-            collider: hexagonCollider,
+            collider,
         });
+        this.pointer.useGraphicsBounds = false;
         this.resource = resource;
         this.hexagonPoints = hexagonPoints;
 
@@ -43,13 +45,20 @@ export class Tile extends Actor {
             points: this.hexagonPoints,
             color: this.color,
         });
-        this.pointer.useGraphicsBounds = false;
         this.graphics.use(hexagon);
 
         this.on("pointerdown", (evt: Input.PointerEvent) => {
             console.log(
                 `${this.resource} tile at ${this.pos.x}, ${this.pos.y} was clicked`
             );
+        });
+
+        this.on("pointerenter", () => {
+            this.color = Color.White;
+        });
+
+        this.on("pointerleave", () => {
+            this.color = RESOURCE_COLORS[this.resource];
         });
     }
 }
