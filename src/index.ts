@@ -9,6 +9,7 @@ import {
 import { Tile } from "./actors/tile";
 import { ScenarioBuilder } from "./lib/scenariobuilder";
 import { Corner } from "./actors/corner";
+import { Edge } from "./actors/edge";
 // import { Resources } from './resources';
 
 /**
@@ -60,7 +61,7 @@ const OFFSET = 300;
 const tiles: Tile[] = [];
 for (const tile of scenario.board.tiles) {
     tiles.push(
-        new Tile(tile.center.x + OFFSET, tile.center.y + OFFSET, tile.type)
+        new Tile(tile.center.x + OFFSET, tile.center.y + OFFSET, scenarioBuilder.getCircumradius(), tile.type)
     );
 }
 
@@ -68,6 +69,13 @@ const corners: Corner[] = [];
 for (const corner of scenario.board.corners) {
     corners.push(
         new Corner(corner.center.x + OFFSET, corner.center.y + OFFSET)
+    );
+}
+
+const edges: Edge[] = [];
+for (const edge of scenario.board.edges) {
+    edges.push(
+        new Edge(edge.center.x + OFFSET, edge.center.y + OFFSET, edge.ends)
     );
 }
 
@@ -79,4 +87,9 @@ tiles.forEach(function (tile) {
 corners.forEach(function (corner) {
     // Add the corner to the current scene to be drawn
     game.add(corner);
+});
+
+edges.forEach(function (edge) {
+    // Add the edge to the current scene to be drawn
+    game.add(edge);
 });

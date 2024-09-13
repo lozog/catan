@@ -56,6 +56,10 @@ export class ScenarioBuilder {
         };
     }
 
+    getCircumradius() {
+        return this.circumradius;
+    }
+
     getLayout() {
         return this.scenario.layouts.find(
             (layout) =>

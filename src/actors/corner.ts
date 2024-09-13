@@ -6,7 +6,7 @@ export class Corner extends Actor {
         super({
             x,
             y,
-            color: Color.Black,
+            color: Color.White,
         });
     }
 
