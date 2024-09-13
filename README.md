@@ -1,6 +1,6 @@
 # Catan clone
 
-This is a coding challenge to build aclone of Catan with [Excalibur](https://excaliburjs.com).
+This is a coding challenge to build a clone of Catan with [Excalibur](https://excaliburjs.com).
 
 ## Get Started
 

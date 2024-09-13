@@ -79,10 +79,10 @@ export class ScenarioBuilder {
     );
 
     constructor() {
-        let defaults = {
-            shuffleTerrainTiles: true,
-            shuffleNumberTokens: false,
-        };
+        // let defaults = {
+        //     shuffleTerrainTiles: true,
+        //     shuffleNumberTokens: false,
+        // };
 
         this.players = 3;
         this.scenario = DEFAULT_SCENARIO;

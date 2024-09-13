@@ -9,6 +9,7 @@ export class Edge extends Actor {
         });
         this.ends = ends;
         this.graphics.anchor = Vector.Zero
+        this.pointer.useColliderShape = false;
     }
 
     public onInitialize() {
@@ -26,6 +27,9 @@ export class Edge extends Actor {
             console.log(
                 `edge from ${this.ends[0].x}, ${this.ends[0].y} to ${this.ends[1].x}, ${this.ends[1].y} was clicked`
             );
+
+            // don't propagate to actors below
+            evt.cancel();
         });
 
         this.on("pointerenter", () => {

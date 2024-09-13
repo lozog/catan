@@ -26,30 +26,6 @@ const game = new Game();
 // game.start(loader);
 game.start();
 
-// // this represents the hex board. Each row contains a 1 for a drawn hex or a 0 for a "ghost" hex
-// // (used for positioning)
-// const gameBoard = [
-//   [0,1,1,1,0],
-//    [1,1,1,1],
-//   [1,1,1,1,1],
-//    [1,1,1,1],
-//   [0,1,1,1,0]
-// ];
-
-// for (const [row, numRows] of gameBoard.entries()) {
-//   for (const [col, shouldDrawTile] of numRows.entries()) {
-//     if (shouldDrawTile === 0) {
-//       continue;
-//     }
-
-//     // console.log(`row ${row} - ${row % 2}`)
-
-//     tiles.push(
-//       new Tile(row, col)
-//     )
-//   }
-// }
-
 const scenarioBuilder = new ScenarioBuilder();
 
 const scenario = scenarioBuilder.getScenario();
@@ -79,10 +55,10 @@ for (const edge of scenario.board.edges) {
     );
 }
 
-tiles.forEach(function (tile) {
-    // Add the tile to the current scene to be drawn
-    game.add(tile);
-});
+// tiles.forEach(function (tile) {
+//     // Add the tile to the current scene to be drawn
+//     game.add(tile);
+// });
 
 corners.forEach(function (corner) {
     // Add the corner to the current scene to be drawn

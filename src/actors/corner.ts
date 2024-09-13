@@ -22,6 +22,17 @@ export class Corner extends Actor {
             console.log(
                 `corner at ${this.pos.x}, ${this.pos.y} was clicked`
             );
+
+            // don't propagate to actors below
+            evt.cancel();
+        });
+
+        this.on("pointerenter", () => {
+            this.color = Color.Black;
+        });
+
+        this.on("pointerleave", () => {
+            this.color = Color.White;
         });
     }
 }

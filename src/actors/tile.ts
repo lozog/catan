@@ -37,7 +37,6 @@ export class Tile extends Actor {
         this.pointer.useGraphicsBounds = false;
         this.resource = resource;
         this.hexagonPoints = hexagonPoints;
-
     }
 
     public onInitialize() {
@@ -51,6 +50,9 @@ export class Tile extends Actor {
             console.log(
                 `${this.resource} tile at ${this.pos.x}, ${this.pos.y} was clicked`
             );
+
+            // don't propagate to actors below
+            evt.cancel();
         });
 
         this.on("pointerenter", () => {
