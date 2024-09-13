@@ -1,12 +1,10 @@
-import { Actor, Circle, Color, Input  } from "excalibur";
+import { Actor, Circle, Color, Input, vec  } from "excalibur";
 
 export class Corner extends Actor {
 
-    // todo: pass offset
-    constructor(x: number, y: number) {
+    constructor(x: number, y: number, offset: number) {
         super({
-            x,
-            y,
+            pos: vec(x + offset, y + offset),
             color: Color.White,
         });
     }

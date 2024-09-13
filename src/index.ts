@@ -31,20 +31,20 @@ const scenarioBuilder = new ScenarioBuilder();
 const scenario = scenarioBuilder.getScenario();
 console.log(scenario.board);
 
-
+// TODO: won't need this once camera is implemented
 const OFFSET = 300;
 
 const tiles: Tile[] = [];
 for (const tile of scenario.board.tiles) {
     tiles.push(
-        new Tile(tile.center.x + OFFSET, tile.center.y + OFFSET, scenarioBuilder.getCircumradius(), tile.type)
+        new Tile(tile.center.x, tile.center.y, scenarioBuilder.getCircumradius(), OFFSET, tile.type)
     );
 }
 
 const corners: Corner[] = [];
 for (const corner of scenario.board.corners) {
     corners.push(
-        new Corner(corner.center.x + OFFSET, corner.center.y + OFFSET)
+        new Corner(corner.center.x, corner.center.y, OFFSET)
     );
 }
 
@@ -55,10 +55,10 @@ for (const edge of scenario.board.edges) {
     );
 }
 
-// tiles.forEach(function (tile) {
-//     // Add the tile to the current scene to be drawn
-//     game.add(tile);
-// });
+tiles.forEach(function (tile) {
+    // Add the tile to the current scene to be drawn
+    game.add(tile);
+});
 
 corners.forEach(function (corner) {
     // Add the corner to the current scene to be drawn

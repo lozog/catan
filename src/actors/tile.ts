@@ -14,8 +14,7 @@ export class Tile extends Actor {
     private resource: string;
     private hexagonPoints: Vector[];
 
-    // todo: pass offset
-    constructor(x: number, y: number, circumradius: number, resource: string) {
+    constructor(x: number, y: number, circumradius: number, offset: number, resource: string) {
         const hexagonPoints = [
             vec(-1, Math.sqrt(3)).scale(circumradius/2),
             vec(1, Math.sqrt(3)).scale(circumradius/2),
@@ -29,8 +28,7 @@ export class Tile extends Actor {
             points: hexagonPoints,
         });
         super({
-            x,
-            y,
+            pos: vec(x + offset, y + offset),
             color: RESOURCE_COLORS[resource],
             collider,
         });
