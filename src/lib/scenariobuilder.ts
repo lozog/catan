@@ -40,7 +40,7 @@ const DEFAULT_SCENARIO = {
 };
 
 const SINGLE_HEX_SCENARIO = {
-    name: "Base game",
+    name: "One tile game",
     victoryPoints: 10,
     allowance: {
         roads: 15,
@@ -341,6 +341,7 @@ export class ScenarioBuilder {
         return {
             allowance: this.scenario.allowance,
             board: board,
+            victoryPoints: this.scenario.victoryPoints,
         };
     }
 }

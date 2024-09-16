@@ -10,14 +10,33 @@ import { Tile } from "./actors/tile";
 import { ScenarioBuilder } from "./lib/scenariobuilder";
 import { Corner } from "./actors/corner";
 import { Edge } from "./actors/edge";
+import { Player } from "./lib/player";
 // import { Resources } from './resources';
+
+const NUM_PLAYERS = 1;
+enum GamePhase {
+    setupOne = 'setup_one'
+}
 
 /**
  * Managed game class
  */
 class Game extends Engine {
+    players: Player[] = [];
+    currentGamePhase: GamePhase = GamePhase.setupOne;
+    currentPlayer: number;
+    victoryPointsToWin: number;
+
     constructor() {
         super({ displayMode: DisplayMode.FitScreen });
+    }
+
+    getCurrentPlayer(): Player {
+        return this.players[this.currentPlayer];
+    }
+
+    hasPlayerWon(player): boolean {
+        return player.points >= this.victoryPointsToWin
     }
 }
 
@@ -27,7 +46,6 @@ const game = new Game();
 game.start();
 
 const scenarioBuilder = new ScenarioBuilder();
-
 const scenario = scenarioBuilder.getScenario();
 console.log(scenario.board);
 
@@ -69,3 +87,16 @@ edges.forEach(function (edge) {
     // Add the edge to the current scene to be drawn
     game.add(edge);
 });
+
+
+// Set up the game and begin
+
+// initialize players
+
+for (let i = 0; i < NUM_PLAYERS; i++) {
+    game.players.push(
+        new Player(i)
+    );
+}
+game.currentPlayer = 0;
+game.victoryPointsToWin = scenario.victoryPoints;
