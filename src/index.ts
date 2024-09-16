@@ -21,8 +21,11 @@ enum GamePhase {
 /**
  * Managed game class
  */
-class Game extends Engine {
+export class Game extends Engine {
     players: Player[] = [];
+    tiles: Tile[] = [];
+    corners: Corner[] = [];
+    edges: Edge[] = [];
     currentGamePhase: GamePhase = GamePhase.setupOne;
     currentPlayer: number;
     victoryPointsToWin: number;
@@ -37,6 +40,19 @@ class Game extends Engine {
 
     hasPlayerWon(player): boolean {
         return player.points >= this.victoryPointsToWin
+    }
+
+    getCornerById(id): Corner {
+        return this.corners.find((corner) => corner.id === id)
+    }
+
+    setSettlement(cornerId: number) {
+        const currentPlayer = this.getCurrentPlayer();
+        const corner = this.getCornerById(cornerId);
+
+        corner.player = currentPlayer;
+
+        // player.addSettlement(cornerId)
     }
 }
 
@@ -58,13 +74,15 @@ for (const tile of scenario.board.tiles) {
         new Tile(tile.center.x, tile.center.y, scenarioBuilder.getCircumradius(), OFFSET, tile.type)
     );
 }
+game.tiles = tiles;
 
 const corners: Corner[] = [];
 for (const corner of scenario.board.corners) {
     corners.push(
-        new Corner(corner.center.x, corner.center.y, OFFSET)
+        new Corner(corner.center.x, corner.center.y, OFFSET, game)
     );
 }
+game.corners = corners;
 
 const edges: Edge[] = [];
 for (const edge of scenario.board.edges) {
@@ -72,6 +90,7 @@ for (const edge of scenario.board.edges) {
         new Edge(edge.ends, OFFSET)
     );
 }
+game.edges = edges;
 
 tiles.forEach(function (tile) {
     // Add the tile to the current scene to be drawn
