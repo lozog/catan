@@ -27,6 +27,8 @@ export class Corner extends Actor {
                 `corner at ${this.pos.x}, ${this.pos.y} was clicked`
             );
 
+            // TODO: figure out why the tiles are eating all mousedown events
+
             // when this is clicked, how can we get info from the game state?
             this.game.setSettlement(this.id);
 
